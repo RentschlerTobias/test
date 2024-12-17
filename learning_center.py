@@ -118,7 +118,7 @@ class learning_center():
     def load_data(self, number_min = 100):
         self.stateCounter.DATADIR = self.pathRunData
         #self.logger_cluster.info(f"StateCounter runData path: {self.stateCounter.DATADIR}.")
-        print(f"StateCounter runData path: {self.stateCounter.DATADIR}.")
+        #print(f"StateCounter runData path: {self.stateCounter.DATADIR}.")
         if self.stateCounter.currentMaxId() == 0:
             pass
         else:
