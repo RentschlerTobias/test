@@ -896,7 +896,7 @@ class learning_center():
     def plot_tensor_all(self, cluster_id, areas = [7,8,1,2,3,4,5,6], var = 'pressure'):
         stateNumbers = [int(s.split("_")[1]) for s in self.give_fitness(cluster_id, output = 'off')[0]]
         self.plt.close('all')
-        fig = self.plt.figure(figsize=(10,8))
+        fig = self.plt.figure(figsize=(12,6))
 
         if var == 'pressure':
             var_int = 0
@@ -939,7 +939,7 @@ class learning_center():
         ax.set_xlabel('hub ---- shroud')
         ax.set_xticklabels([])
         ax.set_yticklabels([])
-        #ax.set_zticklabels([])
+        ax.set_zticklabels([])
         ax.set_zlim(-150, 100)
         ax.set_box_aspect([1, 3, 1])
         ax.view_init(elev=20, azim=-30)

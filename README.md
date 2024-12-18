@@ -22,4 +22,4 @@ Before running this code install and source [dtOO](https://github.com/ihs-ustutt
 ---
 ### License
 
-This database is licensed under the [MIT license](/LICENSE). 
+This work is licensed under the [MIT license](/LICENSE). 
