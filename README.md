@@ -1,7 +1,7 @@
 # AI Design Assistant Source Code
 ---
-This code contains an AI-based design assistant suitable for the [axial turbine](https://github.com/ihs-ustutt/axial_turbine_database/tree/main).
-Computational Fluid Dynamic (CFD) Simulation results are stored in tensors for clustering turbines based on flow field similarities.
+This code contains an AI-based design assistant suitable for the [Axial Turbine](https://github.com/ihs-ustutt/axial_turbine_database/tree/main).
+Computational Fluid Dynamic (CFD) simulation data is stored in tensors for clustering turbines based on flow field similarities.
 Clustering results are mapped by a multi-class prediction neural network to estimated flow field properties for new turbines without CFD.
 For a more detailed explanation see: 
 
@@ -12,16 +12,16 @@ See example in run_ai_design_assistant.ipynb.
 ---
 ### Dataset Availability
 
-Flow Field Tensors are available on request. (runData-directories)
+Flow field tensors are available on request. (runData + tensors)
 
 ---
 ### Requirements
 
 Before running this code install and source [dtOO](https://github.com/ihs-ustutt/dtOO).
 It is recommended to run this code on a cuda-capable device. If not, pretrained model data won't 
-work. Delete files in /model_trained and retrain by yourself in this case.
+work. Delete files in /model_trained and retrain in this case.
 
-For Python Environment see requirements.txt.
+For Python environment see requirements.txt.
 
 ---
 ### License

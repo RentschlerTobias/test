@@ -470,7 +470,7 @@ class learning_center():
             self.train_model_c(area, max_iter = max_iter)
     
         
-    def get_cluster_ids(self, algo = 'KMeans', mode = 'all', retrain = True):
+    def get_cluster_ids(self, algo = 'SpectralClustering', mode = 'all', retrain = True):
         #self.logger_cluster.info(f"Get Cluster IDs with {algo}.")
         print(f"Get Cluster IDs with {algo}.")
         self.cluster_ids = []
