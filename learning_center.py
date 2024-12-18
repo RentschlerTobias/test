@@ -413,15 +413,6 @@ class learning_center():
         print(f"Start Training for {area}")
         #self.logger_cluster.debug(f"Start Training for {area}")
 
-        if event == None:
-            class holder():
-                def __init__(self):
-                    self.parallel = False
-
-                def is_set(self):
-                    return False
-            event = holder()
-
         for epoch in range(max_iter):
             train_loss = 0
             ### COMPUTE TRAINING LOSS ###
@@ -896,8 +887,7 @@ class learning_center():
     def plot_tensor_all(self, cluster_id, areas = [7,8,1,2,3,4,5,6], var = 'pressure'):
         stateNumbers = [int(s.split("_")[1]) for s in self.give_fitness(cluster_id, output = 'off')[0]]
         self.plt.close('all')
-        fig = self.plt.figure(figsize=(12,6))
-
+        fig = self.plt.figure(figsize=(18,5))
         if var == 'pressure':
             var_int = 0
         elif var == 'velo':

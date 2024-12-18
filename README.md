@@ -7,7 +7,7 @@ For a more detailed explanation see:
 
 Eyselein,  S.; Tismer,  A.; Raj,  R.; Rentschler,  T.; Riedelbauch,  S. AI-Based Clustering of Numerical Flow Fields for Accelerating the Optimization of an Axial Turbine. Preprints 2024, 2024121380. https://doi.org/10.20944/preprints202412.1380.v1
 
-See example in Jupyter Notebook.
+See example in run_ai_design_assistant.ipynb.
 
 ---
 ### Dataset Availability
@@ -18,6 +18,10 @@ Flow Field Tensors are available on request. (runData-directories)
 ### Requirements
 
 Before running this code install and source [dtOO](https://github.com/ihs-ustutt/dtOO).
+It is recommended to run this code on a cuda-capable device. If not, pretrained model data won't 
+work. Delete files in /model_trained and retrain by yourself in this case.
+
+For Python Environment see requirements.txt.
 
 ---
 ### License
