@@ -896,13 +896,13 @@ class learning_center():
     def plot_tensor_all(self, cluster_id, areas = [7,8,1,2,3,4,5,6], var = 'pressure'):
         stateNumbers = [int(s.split("_")[1]) for s in self.give_fitness(cluster_id, output = 'off')[0]]
         self.plt.close('all')
-        fig = self.plt.figure(figsize=(14,8))
+        fig = self.plt.figure(figsize=(10,8))
+
         if var == 'pressure':
             var_int = 0
         elif var == 'velo':
             var_int = [1,2,3]
         ax = fig.add_subplot(1,1,1, projection='3d')
-        liste = ['coolwarm', 'viridis']
         for i in range(len(stateNumbers)):
             ind = self.np.where(self.T_denormalized[0] == (self.PREFIX + '_' + str(stateNumbers[i]) + self.op[:-1]))[0][0]
             if var == 'pressure':
@@ -917,9 +917,9 @@ class learning_center():
             ax.plot_surface(x, y, data, cmap='viridis', alpha = 0.4)
 
         if var == 'pressure':
-            ax.set_zlabel('pressure')
+            ax.set_zlabel('pressure', rotation = 90, labelpad = 0)
         elif var == 'velo':
-            ax.set_zlabel('[m/s]')
+            ax.set_zlabel('[m/s]', rotation = 90, labelpad = 0)
         if 8 in areas:
             y_Vorderkante = y_1d[(areas.index(8)+1)*14-1]
             x_line = self.np.linspace(0, 1, data.shape[0])
@@ -939,15 +939,11 @@ class learning_center():
         ax.set_xlabel('hub ---- shroud')
         ax.set_xticklabels([])
         ax.set_yticklabels([])
-        ax.set_zticklabels([])
+        #ax.set_zticklabels([])
         ax.set_zlim(-150, 100)
         ax.set_box_aspect([1, 3, 1])
         ax.view_init(elev=20, azim=-30)
-        if var == 'pressure':
-            ax.set_zlabel('pressure')
-        elif var == 'velo':
-            ax.set_zlabel('[m/s]')
-        self.plt.title(f"{var}-fields of Cluster_ID: {cluster_id}")
+        self.plt.title(f"Superposed {var}-fields of cluster-id: {cluster_id}")
         self.plt.yticks([])
         self.plt.tight_layout
         self.plt.show()
@@ -964,7 +960,7 @@ class learning_center():
         self.set_cluster_anzahl(cluster_anzahl)
         self.get_cluster_ids(algo = self.cl_alg, mode = 'all')
         self.fit_data(solver='lbfgs', validation_fraction=0.1, hidden_layer = (64,54), size_testdata = 15, activation = 'relu' )
-        print("*** Design Assisant Retraining Finished ***")
+        print("*** Design Assistant Retraining Finished ***")
 
 
     def get_z(self, stateNumber):
@@ -972,72 +968,6 @@ class learning_center():
         indice = self.np.where(self.z[0] == case)[0]
         z = self.z[1][indice]
         return z
-
-
-
-    def plot_tensor_one(self, cluster_id, areas = [7,8,1,2,3,4,5,6], var = 'pressure'):
-            from mpl_toolkits.mplot3d import Axes3D
-            stateNumbers = [int(s.split("_")[1]) for s in self.give_fitness(cluster_id, output = 'off')[0]]
-            self.plt.close('all')
-            fig = self.plt.figure(figsize = [10, 8])
-            number_plots_y = 2
-            number_plots_x = int(self.np.ceil(len(stateNumbers)/number_plots_y))
-            if var == 'pressure':
-                var_int = 0
-            elif var == 'velo':
-                var_int = [1,2,3]
-            ax = fig.add_subplot(1,1,1, projection='3d')
-            liste = ['coolwarm', 'viridis']
-            for i in range(len(stateNumbers)):
-                ind = self.np.where(self.T_denormalized[0] == (self.PREFIX + '_' + str(stateNumbers[i]) + self.op[:-1]))[0][0]
-                if var == 'pressure':
-                    cat_list = [self.T_denormalized[i][ind][var_int,:,0,:] for i in areas]
-                elif var == 'velo':
-                    cat_list = [self.T_denormalized[i][ind][var_int,:,0,:].norm(dim=0) for i in areas]           
-            
-                z_min = -150
-                data = self.torch.cat(cat_list, dim=1)
-                x = self.np.linspace(0, 1, data.shape[0])
-                y_1d = self.np.linspace(0, 1, data.shape[1]) 
-                x, y = self.np.meshgrid(x, y_1d, indexing='ij')
-                ax.plot_surface(x, y, data, cmap='viridis', alpha = 0.4)
-
-            #ax.set_ylabel('s ->') #: Entgegen Uhrzeigersinn
-            if var == 'pressure':
-                ax.set_zlabel('pressure' ,fontsize = 22)
-            elif var == 'velo':
-                ax.set_zlabel('[m/s]')
-            if 8 in areas:
-                y_Vorderkante = y_1d[(areas.index(8)+1)*14-1]
-                x_line = self.np.linspace(0, 1, data.shape[0])
-                y_line = self.np.ones_like(x_line)*y_Vorderkante
-                z_line = self.np.full_like(x_line, z_min)
-                ax.plot(x_line, y_line, z_line, color='black', linestyle='-', linewidth = 2.5)
-                ax.text(1.5, y_Vorderkante ,z = z_min-10 ,s =  'leading edge', fontsize = 22, color='black', ha='center')
-
-            if 4 in areas:
-                y_Hinterkante = y_1d[(areas.index(4)+1)*14-1]
-                x_line = self.np.linspace(0, 1, data.shape[0])
-                y_line = self.np.ones_like(x_line)*y_Hinterkante
-                z_line = self.np.full_like(x_line, z_min)
-                ax.plot(x_line, y_line, z_line, color='black', linestyle='-', linewidth = 2.5)
-                ax.text(1.5, y_Hinterkante ,z = z_min-10 ,s =  'trailing edge', fontsize = 22, color='black', ha='center')
-            
-            ax.set_xlabel('hub ---- shroud',fontsize = 22)
-            #ax.set_ylabel('s ->') #: Entgegen Uhrzeigersinn
-            ax.set_xticklabels([])
-            ax.set_yticklabels([])
-            ax.set_zticklabels([])
-            ax.set_zlim(-150, 100)
-            ax.set_box_aspect([1, 3, 1])
-            ax.view_init(elev=20, azim=-30)
-            #self.plt.title(f"Cluster_ID: {cluster_id}")
-            self.plt.yticks([])
-            self.plt.tight_layout
-            self.plt.show()
-
-
-
 
 
 
